@@ -254,12 +254,16 @@
              */
             inject: function(item) {
 
-                var el = document.getElementsByClassName('alertify')[0];
+                var els = document.getElementsByClassName('alertify');
+                
 
-                if( el.length <= 0 ){
-                    return false;
+                if( els.length > 1 ){
+                    var el = els[els.length-1];
+                } else {
+                    var el = els[0];
                 }
-
+                console.log("el: ", el);
+                
                 if( item.type != 'alert' ){
                     return false;
                 }
@@ -271,8 +275,12 @@
 
                 if( btnOK && item.locked === true ){
                     btnOK.disabled = true;
+                    btnOK.firstChild.data = "Please Wait...";
+                    btnOK.style.backgroundColor = "rgba(0,0,0,.05)";
                 } else if( btnOK && item.locked === false ){
                     btnOK.disabled = false;
+                    btnOK.firstChild.data = "OK";
+                    btnOK.style.removeProperty('background-color');
                 }
 
                 msg.innerHTML = item.message;
